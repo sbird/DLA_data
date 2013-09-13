@@ -31,6 +31,6 @@ be easier for numpy to read.
 
 apj433829t2_mrt.txt    
 apj433829t3_mrt.txt    
-DLA metallicities from Neeleman, M et al 2012: 1205.5047
+DLA metallicities from Rafelski et al 2012: 1205.5047
 Compendium of a lot more metallicities, without reliable velocity widths,
 over a wide redshift range. t2 is new to that paper, t3 is literature.
