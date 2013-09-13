@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 import os.path as path
 import numpy as np
 
-def column_density_data(datadir="data", moment=False):
+def column_density_data(moment=False):
     """Plot the data on the column density function at z=3"""
+    datadir = path.dirname(__file__)
 #     celine_data(datadir)
 #     peroux_data(datadir)
     omeara_data(datadir, moment)
@@ -106,14 +107,16 @@ def prochaska_10_data(datadir="data", moment=False):
     ax.fill(10.**data[:,0],10.**cddf,'grey')
 
 
-def dndx_pro(datadir="data"):
+def dndx_pro():
     """Plot the line densities for DLAs from Prochaska & Wolfe 2009, 0811.2003"""
+    datadir = path.dirname(__file__)
     data = np.loadtxt(path.join(datadir,"dndx.txt"))
     zcen = (data[1:-1,0]+data[1:-1,1])/2.
     plt.errorbar(zcen, data[1:-1,2],xerr=[zcen-data[1:-1,0], data[1:-1,1]-zcen], yerr=data[1:-1,3], fmt="o",color="orange")
 
-def omegahi_pro(datadir="data"):
+def omegahi_pro():
     """Plot the total rho_HI density for DLAs from Prochaska & Wolfe 2009, 0811.2003"""
+    datadir = path.dirname(__file__)
     data = np.loadtxt(path.join(datadir,"dndx.txt"))
     zcen = (data[1:-1,0]+data[1:-1,1])/2.
     rhohi = data[1:-1,4]
