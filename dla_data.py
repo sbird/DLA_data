@@ -10,8 +10,11 @@ def column_density_data(moment=False):
     datadir = path.dirname(__file__)
 #     celine_data(datadir)
 #     peroux_data(datadir)
-    omeara_data(datadir, moment)
+    kim13_data(datadir, moment)
+#     omeara_data(datadir, moment)
+    zafar_data(datadir, moment)
     noterdaeme_12_data(datadir, moment)
+    noterdaeme_data(datadir, moment)
 #     prochaska_data(datadir)
 #     prochaska_05_data(datadir)
     prochaska_10_data(datadir, moment)
@@ -51,9 +54,9 @@ def omeara_data(datadir="data", moment=False):
     if moment:
         for i in (1,4,5):
             omera[:,i]*=omera[:,0]
-    plt.errorbar(omera[:,0],omera[:,1],xerr=[omera[:,2],omera[:,3]], yerr=[omera[:,4],omera[:,5]], fmt='s',color='black',ms=8)
+    plt.errorbar(omera[:,0],omera[:,1],xerr=[omera[:,2],omera[:,3]], yerr=[omera[:,4],omera[:,5]], fmt='s',color='black',ms=5)
 
-def noterdaeme_data(datadir="data"):
+def noterdaeme_data(datadir="data", moment=False):
     """Plot the Noterdaeme 09 data on the column density function at z=2-3
     Format: x, y, xerr, yerr (in logspace)"""
     data=np.loadtxt(path.join(datadir,"fhix.dat"))
@@ -63,7 +66,30 @@ def noterdaeme_data(datadir="data"):
     uyer=10**(data[:,3]+data[:,1])-10**data[:,1]
     lyer=-10**(-data[:,3]+data[:,1])+10**data[:,1]
     NHI = 10**data[:,0]
-    plt.errorbar(NHI,10**data[:,1]*NHI,xerr=[lxer,uxer],yerr=[lyer*NHI,uyer*NHI], fmt='^',color='green',ms=10)
+    cddf = 10**data[:,1]
+    if moment:
+        lyer*=NHI
+        uyer*=NHI
+        cddf*=NHI
+    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='^',color='green',ms=5)
+
+def zafar_data(datadir="data", moment=False):
+    """Plot Zafar & Peroux data on LLS at z=1.5 - 5.
+    This is 1307.0602.
+    Format: x, y, xerr, yerr (in logspace)"""
+    data=np.loadtxt(path.join(datadir,"zafar_2013.txt"))
+    #Madness to put log errors into non-log
+    NHI = 10**data[:,0]
+    cddf = 10**data[:,2]
+    uxer=10**(data[:,1]+data[:,0])-10**data[:,0]
+    lxer=-10**(-data[:,1]+data[:,0])+10**data[:,0]
+    uyer=10**(data[:,3]+data[:,2])-10**data[:,2]
+    lyer=-10**(-data[:,4]+data[:,2])+10**data[:,2]
+    if moment:
+        lyer*=NHI
+        uyer*=NHI
+        cddf*=NHI
+    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='o',color='black',ms=5)
 
 def noterdaeme_12_data(datadir="data", moment=False):
     """Plot the Noterdaeme 12 data (1210.1213) on the column density function at z=2-3.5
@@ -80,7 +106,23 @@ def noterdaeme_12_data(datadir="data", moment=False):
         lyer*=NHI
         uyer*=NHI
         cddf*=NHI
-    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='^',color='green',ms=10)
+    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='^',color='black',ms=5)
+
+def kim13_data(datadir="data", moment=False):
+    """Low col density data from Kim 13: 1302.6622"""
+    data=np.loadtxt(path.join(datadir,"kim13.txt"))
+    #Madness to put log errors into non-log
+    NHI = 10**((data[:,0]+data[:,1])/2.)
+    uxer = 10**data[:,1]-NHI
+    lxer = NHI-10**data[:,0]
+    cddf = 10**data[:,2]
+    uyer = 10**(data[:,3]+data[:,2])-cddf
+    lyer = cddf-10**(data[:,4]+data[:,2])
+    if moment:
+        lyer*=NHI
+        uyer*=NHI
+        cddf*=NHI
+    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='o',color='black',ms=5)
 
 def prochaska_data(datadir="data"):
     """Plot the Prochaska and Wolfe 10 data on the column density function.
