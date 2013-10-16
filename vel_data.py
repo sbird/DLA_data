@@ -110,3 +110,24 @@ def plot_alpha_metal_data(zrange=(3.5,2.5),nv_table=7):
     plt.plot(center, vels,'o', color="purple")
 
     return (center, vels, verr)
+
+def plot_lls_metal_data(nv_table=7):
+    """
+       Plot the metallicities of DLAs from the catalogues found in Lehner 2013
+       at z=0-1
+    """
+    data = np.loadtxt(path.join(datadir,"lls_metallicity.txt"), usecols=(1,3))
+    #Only LLS
+    ind = np.where(data[:,0] < 20.3)
+    met = data[ind,1]
+    v_table=np.linspace(np.min(met),np.max(met),nv_table)
+    #Bins should not be smaller than error on metallicity, which is about 0.2.
+    if (- np.min(met) + np.max(met))/ nv_table < 0.2:
+        raise ValueError("Requested bins smaller than 0.2, error on metallicity")
+
+    (center, vels, verr) = pdf_with_error(met, v_table, lognorm=False)
+
+    plt.errorbar(center,vels,xerr=[center-v_table[:-1],v_table[1:]-center],yerr=verr,fmt='.', color="black")
+    plt.plot(center, vels,'o', color="purple")
+
+    return (center, vels, verr)
