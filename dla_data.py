@@ -148,6 +148,17 @@ def prochaska_10_data(datadir="data", moment=False):
         cddf+=data[:,0]
     ax.fill(10.**data[:,0],10.**cddf,'grey')
 
+def braun_data(datadir="data"):
+    """f(N) from Braun 2012 1202.1840 at z=0"""
+    data = np.loadtxt(path.join(datadir, "braun_z0.txt"))
+    NHI = 10**data[:,0]
+    cddf = 10**data[:,1]
+    uxer = 10**0.25-NHI
+    lxer = NHI-10**0.25
+    uyer = 10**(data[:,1]+data[:,2])-cddf
+    lyer = cddf-10**(data[:,1]-data[:,2])
+    plt.errorbar(10**data[:,0],10**data[:,1],xerr=[lxer, uxer], yerr=[lyer, uyer],fmt='s', ms=5,color="black")
+
 
 def dndx_pro():
     """Plot the line densities for DLAs from Prochaska & Wolfe 2009, 0811.2003"""
