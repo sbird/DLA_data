@@ -160,6 +160,18 @@ def braun_data(datadir="data"):
     plt.errorbar(10**data[:,0],10**data[:,1],xerr=[lxer, uxer], yerr=[lyer, uyer],fmt='s', ms=5,color="black")
 
 
+def zwaan_data():
+    """f(N) from Zwaan 2005 astro-ph/0510127 at z=0"""
+    datadir = path.dirname(__file__)
+    data = np.loadtxt(path.join(datadir, "zwaan_data.txt"))
+    NHI = 10**data[:,0]
+    cddf = 10**data[:,1]
+    uxer = 10**0.1-NHI
+    lxer = NHI-10**0.1
+    uyer = 10**(data[:,1]+data[:,3])-cddf
+    lyer = cddf-10**(data[:,1]-data[:,2])
+    plt.errorbar(NHI,cddf,xerr=[lxer, uxer], yerr=[lyer, uyer],fmt='s', ms=5,color="black")
+
 def dndx_pro():
     """Plot the line densities for DLAs from Prochaska & Wolfe 2009, 0811.2003"""
     datadir = path.dirname(__file__)
