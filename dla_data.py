@@ -148,8 +148,9 @@ def prochaska_10_data(datadir="data", moment=False):
         cddf+=data[:,0]
     ax.fill(10.**data[:,0],10.**cddf,'grey')
 
-def braun_data(datadir="data"):
+def braun_data():
     """f(N) from Braun 2012 1202.1840 at z=0"""
+    datadir = path.dirname(__file__)
     data = np.loadtxt(path.join(datadir, "braun_z0.txt"))
     NHI = 10**data[:,0]
     cddf = 10**data[:,1]
