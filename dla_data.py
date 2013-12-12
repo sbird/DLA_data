@@ -10,10 +10,10 @@ def column_density_data(moment=False):
     datadir = path.dirname(__file__)
 #     celine_data(datadir)
 #     peroux_data(datadir)
-    kim13_data(datadir, moment)
+#     kim13_data(datadir, moment)
 #     omeara_data(datadir, moment)
     zafar_data(datadir, moment)
-    noterdaeme_12_data(datadir, moment)
+#     noterdaeme_12_data(datadir, moment)
     noterdaeme_data(datadir, moment)
 #     prochaska_data(datadir)
 #     prochaska_05_data(datadir)
@@ -71,7 +71,7 @@ def noterdaeme_data(datadir="data", moment=False):
         lyer*=NHI
         uyer*=NHI
         cddf*=NHI
-    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='^',color='green',ms=5)
+    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='s',color='black',ms=5)
 
 def zafar_data(datadir="data", moment=False):
     """Plot Zafar & Peroux data on LLS at z=1.5 - 5.
@@ -154,7 +154,7 @@ def dndx_pro():
     datadir = path.dirname(__file__)
     data = np.loadtxt(path.join(datadir,"dndx.txt"))
     zcen = (data[1:-1,0]+data[1:-1,1])/2.
-    plt.errorbar(zcen, data[1:-1,2],xerr=[zcen-data[1:-1,0], data[1:-1,1]-zcen], yerr=data[1:-1,3], fmt="o",color="orange")
+    plt.errorbar(zcen, data[1:-1,2],xerr=[zcen-data[1:-1,0], data[1:-1,1]-zcen], yerr=data[1:-1,3], fmt="o",color="grey")
 
 def omegahi_pro():
     """Plot the total rho_HI density for DLAs from Prochaska & Wolfe 2009, 0811.2003"""
@@ -170,7 +170,7 @@ def omegahi_pro():
     #Note: this factor is 0.74, so that the Noterdaeme
     #Omega_DLA is numerically similar to the rho_HI of Prochaska
     omega_DLA = rhohi*conv/rho_crit*1000
-    plt.errorbar(zcen, omega_DLA,xerr=[zcen-data[1:-1,0], data[1:-1,1]-zcen], yerr=data[1:-1,5], fmt="o",color="orange")
+    plt.errorbar(zcen, omega_DLA,xerr=[zcen-data[1:-1,0], data[1:-1,1]-zcen], yerr=data[1:-1,5], fmt="o",color="grey")
 
 def omegahi_not():
     """Omega_DLA from Noterdaeme 2012, 1210.1213"""

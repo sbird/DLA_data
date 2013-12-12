@@ -68,7 +68,7 @@ def plot_prochaska_2008_correlation(zrange = None, color="black"):
 
 def plot_extra_stat_hist(stat=False,zrange=None, nv_table=11):
     """Plot a histogram of the mean-median statistic"""
-    data2 = np.loadtxt("apj469315t2_mrt_mod.txt")
+    data2 = np.loadtxt(path.join(datadir,"apj469315t2_mrt_mod.txt"))
     redshift = data2[:,0] #np.concatenate([data[:,0], data2[:,0]])
     fmm = data2[:,6+int(stat)] #np.concatenate([data[:,1],data2[:,3]])
     if zrange != None:
@@ -93,7 +93,7 @@ def load_metal_data(zrange=None):
 
     return (redshift, met)
 
-def plot_alpha_metal_data(zrange=(3.5,2.5),nv_table=7):
+def plot_alpha_metal_data(zrange=(3.5,2.5),nv_table=6):
     """
        Plot the metallicities of DLAs from the catalogues found in Rafelski 2012
        redshift  = (4,3) will show only quasars between z=4 and z=3
@@ -107,7 +107,7 @@ def plot_alpha_metal_data(zrange=(3.5,2.5),nv_table=7):
     (center, vels, verr) = pdf_with_error(met, v_table, lognorm=False)
 
     plt.errorbar(center,vels,xerr=[center-v_table[:-1],v_table[1:]-center],yerr=verr,fmt='.', color="black")
-    plt.plot(center, vels,'o', color="purple")
+    plt.plot(center, vels,'o', color="black")
 
     return (center, vels, verr)
 
@@ -128,6 +128,6 @@ def plot_lls_metal_data(nv_table=7):
     (center, vels, verr) = pdf_with_error(met, v_table, lognorm=False)
 
     plt.errorbar(center,vels,xerr=[center-v_table[:-1],v_table[1:]-center],yerr=verr,fmt='.', color="black")
-    plt.plot(center, vels,'o', color="purple")
+    plt.plot(center, vels,'o', color="black")
 
     return (center, vels, verr)
