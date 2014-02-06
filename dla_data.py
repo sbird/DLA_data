@@ -124,13 +124,16 @@ def kim13_data(datadir="data", moment=False):
         cddf*=NHI
     plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='o',color='black',ms=5)
 
-def prochaska_data(datadir="data"):
+def prochaska_data(datadir="data", moment=False):
     """Plot the Prochaska and Wolfe 10 data on the column density function.
     Mean redshift is 3.05.
     Format: x lowerxerr upperxerr y"""
     data=np.loadtxt(path.join(datadir,"2fn_sdss_dr5.dat"))
     data=10**data
-    plt.errorbar(data[:,0],data[:,3],xerr=[data[:,0]-data[:,1],data[:,2]-data[:,0]],fmt='.')
+    cddf = data[:,3]
+    if moment:
+        cddf *= data[:,0]
+    plt.errorbar(data[:,0],cddf,xerr=[data[:,0]-data[:,1],data[:,2]-data[:,0]],fmt='.')
 
 def prochaska_05_data(datadir="data"):
     """Plot the Prochaska 05 data on the column density function at z=3"""
