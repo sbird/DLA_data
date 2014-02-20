@@ -131,3 +131,24 @@ def plot_lls_metal_data(nv_table=7):
     plt.plot(center, vels,'o', color="black")
 
     return (center, vels, verr)
+
+def plot_si1526_eqw(zrange = None, nv_table = 11):
+    """Plot a histogram of the SiII 1526 equivalent width distribution"""
+    data2 = np.loadtxt(path.join(datadir,"apj469315t2_mrt_mod.txt"))
+    redshift = data2[:,0]
+    eqw = data2[:,8]
+    ind = np.where(eqw > 0)
+    eqw = eqw[ind]
+    redshift = redshift[ind]
+    if zrange != None:
+        ind = np.where((redshift < zrange[0])*(redshift > zrange[1]))
+        eqw = eqw[ind]
+
+    v_table=np.logspace(np.log10(np.min(eqw)),np.log10(np.max(eqw)),nv_table)
+    (center, bins, err) = pdf_with_error(eqw, v_table)
+
+    plt.errorbar(center,bins,xerr=[center-v_table[:-1],v_table[1:]-center],yerr=err,fmt='.', color="black")
+    plt.semilogx(center, bins,'o', color="black")
+    plt.xlim(10**-1.5, 10**0.5)
+    return (center, bins, err)
+
