@@ -89,7 +89,7 @@ def zafar_data(datadir="data", moment=False):
         lyer*=NHI
         uyer*=NHI
         cddf*=NHI
-    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='o',color='black',ms=5)
+    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='o',color='grey',ms=5)
 
 def noterdaeme_12_data(datadir="data", moment=False):
     """Plot the Noterdaeme 12 data (1210.1213) on the column density function at z=2-3.5

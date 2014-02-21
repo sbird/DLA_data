@@ -144,11 +144,11 @@ def plot_si1526_eqw(zrange = None, nv_table = 11):
         ind = np.where((redshift < zrange[0])*(redshift > zrange[1]))
         eqw = eqw[ind]
 
-    v_table=np.logspace(np.log10(np.min(eqw)),np.log10(np.max(eqw)),nv_table)
-    (center, bins, err) = pdf_with_error(eqw, v_table)
+    v_table=np.linspace(np.log10(np.min(eqw)),np.log10(np.max(eqw)),nv_table)
+    (center, bins, err) = pdf_with_error(np.log10(eqw), v_table, lognorm=False)
 
     plt.errorbar(center,bins,xerr=[center-v_table[:-1],v_table[1:]-center],yerr=err,fmt='.', color="black")
-    plt.semilogx(center, bins,'o', color="black")
-    plt.xlim(10**-1.5, 10**0.5)
+    plt.plot(center, bins,'o', color="black")
+    plt.xlim(-1.5, 0.5)
     return (center, bins, err)
 
