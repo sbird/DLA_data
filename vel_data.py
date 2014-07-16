@@ -51,11 +51,12 @@ def pdf_with_error(vel_data, v_table, lognorm=True, poisson=False, cumulative=Fa
             #These v_table will have error bars that go to 0
             ind = np.where(nn == 1)
             verr[ind] *= (0.98)
+            return (center, vels, verr)
     else:
         vels = np.cumsum(nn)
     return (center, vels)
 
-def plot_prochaska_2008_data(zrange = None, nv_table=15):
+def plot_prochaska_2008_data(zrange = None, nv_table=11):
     """Plot a velocity width histogram from Neeleman 2013"""
     (_, _, vel_data) = load_data(zrange)
     v_table=np.logspace(np.log10(10),np.log10(np.max(vel_data)+10),nv_table)
@@ -86,7 +87,7 @@ def plot_prochaska_2008_correlation(zrange = None, color="black"):
     xx = np.logspace(np.min(vel), np.max(vel),15)
     plt.loglog(xx, 10**intercept*xx**slope, color=color)
 
-def plot_extra_stat_hist(stat=False,zrange=None, nv_table=15):
+def plot_extra_stat_hist(stat=False,zrange=None, nv_table=11):
     """Plot a histogram of the mean-median statistic"""
     data2 = np.loadtxt(path.join(datadir,"apj469315t2_mrt_mod.txt"))
     redshift = data2[:,0] #np.concatenate([data[:,0], data2[:,0]])
@@ -164,7 +165,7 @@ def plot_lls_metal_data(nv_table=7):
     plt.errorbar(center,vels,xerr=[center-v_table[:-1],v_table[1:]-center],yerr=verr,fmt='o', color="black")
     return (center, vels, verr)
 
-def plot_si1526_eqw(zrange = None, nv_table = 15):
+def plot_si1526_eqw(zrange = None, nv_table = 11):
     """Plot a histogram of the SiII 1526 equivalent width distribution"""
     data2 = np.loadtxt(path.join(datadir,"apj469315t2_mrt_mod.txt"))
     redshift = data2[:,0]
