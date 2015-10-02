@@ -40,9 +40,9 @@ def pdf_with_error(vel_data, v_table, lognorm=True, poisson=False, cumulative=Fa
     #This emulates np.histogram(np.log10(met), np.log10(bin),density=True)
     if not cumulative:
         if lognorm:
-            norm = np.array([(-np.log10(v_table[i])+np.log10(v_table[i+1])) for i in xrange(np.size(v_table)-1)])
+            norm = np.array([(-np.log10(v_table[i])+np.log10(v_table[i+1])) for i in range(np.size(v_table)-1)])
         else:
-            norm = np.array([(-v_table[i]+v_table[i+1]) for i in xrange(np.size(v_table)-1)])
+            norm = np.array([(-v_table[i]+v_table[i+1]) for i in range(np.size(v_table)-1)])
         norm *= np.size(vel_data)
         vels = nn / norm
         if poisson:
