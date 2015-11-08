@@ -5,19 +5,20 @@ import matplotlib.pyplot as plt
 import os.path as path
 import numpy as np
 
+datadir = path.dirname(__file__)
+
 def column_density_data(moment=False):
     """Plot the data on the column density function at z=3"""
-    datadir = path.dirname(__file__)
-#     celine_data(datadir)
-#     peroux_data(datadir)
-#     kim13_data(datadir, moment)
-#     omeara_data(datadir, moment)
-    zafar_data(datadir, moment)
-#     noterdaeme_12_data(datadir, moment)
-    noterdaeme_data(datadir, moment)
-#     prochaska_data(datadir)
-#     prochaska_05_data(datadir)
-    prochaska_10_data(datadir, moment)
+#     celine_data()
+#     peroux_data()
+#     kim13_data(moment)
+#     omeara_data(moment)
+    zafar_data(moment)
+#     noterdaeme_12_data(moment)
+    noterdaeme_data(moment)
+#     prochaska_data()
+#     prochaska_05_data()
+    prochaska_10_data(moment)
 
 def format_error_bars(data):
     """Take a file formatted for SuperMongo and format it instead for matplotlib,
@@ -33,20 +34,20 @@ def format_error_bars(data):
     data[:,5]=data[:,5]-data[:,1]
     return data
 
-def celine_data(datadir="data"):
+def celine_data():
     """Plot the Peroux 2001 data on the column density function at z=3"""
     celine=np.loadtxt(path.join(datadir,"fn_celine_z3.dat"))
     celine=format_error_bars(celine)
     plt.errorbar(celine[:,0],celine[:,1],xerr=[celine[:,2],celine[:,3]], yerr=[celine[:,4],celine[:,5]], fmt='o')
     return
 
-def peroux_data(datadir="data"):
+def peroux_data():
     """Plot the Peroux 2005 data on the column density function at z=3"""
     peroux=np.loadtxt(path.join(datadir,"peroux05_z3.dat"))
     peroux=format_error_bars(peroux)
     plt.errorbar(peroux[:,0],peroux[:,1],xerr=[peroux[:,2],peroux[:,3]], yerr=[peroux[:,4],peroux[:,5]], fmt='*')
 
-def omeara_data(datadir="data", moment=False):
+def omeara_data(moment=False):
     """Plot the O'Meara 07 data on the column density function (LLS). Mean redshift is 3.1"""
     omera=np.loadtxt(path.join(datadir,"summary.dat"))
     omera=format_error_bars(omera)
@@ -56,7 +57,7 @@ def omeara_data(datadir="data", moment=False):
             omera[:,i]*=omera[:,0]
     plt.errorbar(omera[:,0],omera[:,1],xerr=[omera[:,2],omera[:,3]], yerr=[omera[:,4],omera[:,5]], fmt='s',color='black',ms=5)
 
-def noterdaeme_data(datadir="data", moment=False):
+def noterdaeme_data(moment=False):
     """Plot the Noterdaeme 09 data on the column density function at z=2-3
     Format: x, y, xerr, yerr (in logspace)"""
     data=np.loadtxt(path.join(datadir,"fhix.dat"))
@@ -73,7 +74,7 @@ def noterdaeme_data(datadir="data", moment=False):
         cddf*=NHI
     plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='s',color='black',ms=5)
 
-def zafar_data(datadir="data", moment=False):
+def zafar_data(moment=False):
     """Plot Zafar & Peroux data on LLS at z=1.5 - 5.
     This is 1307.0602.
     Format: x, y, xerr, yerr (in logspace)"""
@@ -91,7 +92,7 @@ def zafar_data(datadir="data", moment=False):
         cddf*=NHI
     plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='o',color='grey',ms=5)
 
-def noterdaeme_12_data(datadir="data", moment=False):
+def noterdaeme_12_data(moment=False):
     """Plot the Noterdaeme 12 data (1210.1213) on the column density function at z=2-3.5
     Format: x, y, xerr, yerr (in logspace)"""
     data=np.loadtxt(path.join(datadir,"not_2012.dat"))
@@ -108,7 +109,7 @@ def noterdaeme_12_data(datadir="data", moment=False):
         cddf*=NHI
     plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='^',color='black',ms=5)
 
-def kim13_data(datadir="data", moment=False):
+def kim13_data(moment=False):
     """Low col density data from Kim 13: 1302.6622"""
     data=np.loadtxt(path.join(datadir,"kim13.txt"))
     #Madness to put log errors into non-log
@@ -124,7 +125,7 @@ def kim13_data(datadir="data", moment=False):
         cddf*=NHI
     plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='o',color='black',ms=5)
 
-def prochaska_data(datadir="data", moment=False):
+def prochaska_data(moment=False):
     """Plot the Prochaska and Wolfe 10 data on the column density function.
     Mean redshift is 3.05.
     Format: x lowerxerr upperxerr y"""
@@ -135,13 +136,13 @@ def prochaska_data(datadir="data", moment=False):
         cddf *= data[:,0]
     plt.errorbar(data[:,0],cddf,xerr=[data[:,0]-data[:,1],data[:,2]-data[:,0]],fmt='.')
 
-def prochaska_05_data(datadir="data"):
+def prochaska_05_data():
     """Plot the Prochaska 05 data on the column density function at z=3"""
     omera=np.loadtxt(path.join(datadir,"prochaska_05.dat"))
     omera=format_error_bars(omera)
     plt.errorbar(omera[:,0],omera[:,1],xerr=[omera[:,2],omera[:,3]], yerr=[omera[:,4],omera[:,5]], fmt='D')
 
-def prochaska_10_data(datadir="data", moment=False):
+def prochaska_10_data(moment=False):
     """Plot the LLS only data of Prochaska 2010, given as a box rather than the more conventional error bars.
     This is at z=3.7"""
     data=np.loadtxt(path.join(datadir,"prochaska_lls.dat"))
@@ -153,7 +154,6 @@ def prochaska_10_data(datadir="data", moment=False):
 
 def braun_data():
     """f(N) from Braun 2012 1202.1840 at z=0"""
-    datadir = path.dirname(__file__)
     data = np.loadtxt(path.join(datadir, "braun_z0.txt"))
     NHI = 10**data[:,0]
     cddf = 10**data[:,1]
@@ -166,7 +166,6 @@ def braun_data():
 
 def zwaan_data():
     """f(N) from Zwaan 2005 astro-ph/0510127 at z=0"""
-    datadir = path.dirname(__file__)
     data = np.loadtxt(path.join(datadir, "zwaan_data.txt"))
     NHI = 10**data[:,0]
     cddf = 10**data[:,1]
@@ -178,14 +177,12 @@ def zwaan_data():
 
 def dndx_pro():
     """Plot the line densities for DLAs from Prochaska & Wolfe 2009, 0811.2003"""
-    datadir = path.dirname(__file__)
     data = np.loadtxt(path.join(datadir,"dndx.txt"))
     zcen = (data[1:-1,0]+data[1:-1,1])/2.
     plt.errorbar(zcen, data[1:-1,2],xerr=[zcen-data[1:-1,0], data[1:-1,1]-zcen], yerr=data[1:-1,3], fmt="o",color="grey")
 
 def omegahi_pro():
     """Plot the total rho_HI density for DLAs from Prochaska & Wolfe 2009, 0811.2003"""
-    datadir = path.dirname(__file__)
     data = np.loadtxt(path.join(datadir,"dndx.txt"))
     zcen = (data[1:-1,0]+data[1:-1,1])/2.
     rhohi = data[1:-1,4]
