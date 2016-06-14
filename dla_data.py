@@ -107,7 +107,7 @@ def noterdaeme_12_data(moment=False):
         lyer*=NHI
         uyer*=NHI
         cddf*=NHI
-    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='^',color='black',ms=5)
+    plt.errorbar(NHI,cddf,xerr=[lxer,uxer],yerr=[lyer,uyer], fmt='^',color='black',ms=5, label="N12")
 
 def kim13_data(moment=False):
     """Low col density data from Kim 13: 1302.6622"""
@@ -179,7 +179,7 @@ def dndx_pro():
     """Plot the line densities for DLAs from Prochaska & Wolfe 2009, 0811.2003"""
     data = np.loadtxt(path.join(datadir,"dndx.txt"))
     zcen = (data[1:-1,0]+data[1:-1,1])/2.
-    plt.errorbar(zcen, data[1:-1,2],xerr=[zcen-data[1:-1,0], data[1:-1,1]-zcen], yerr=data[1:-1,3], fmt="o",color="grey")
+    plt.errorbar(zcen, data[1:-1,2],xerr=[zcen-data[1:-1,0], data[1:-1,1]-zcen], yerr=data[1:-1,3], fmt="o",color="grey",label="PW09")
 
 def omegahi_pro():
     """Plot the total rho_HI density for DLAs from Prochaska & Wolfe 2009, 0811.2003"""
@@ -194,7 +194,7 @@ def omegahi_pro():
     #Note: this factor is 0.74, so that the Noterdaeme
     #Omega_DLA is numerically similar to the rho_HI of Prochaska
     omega_DLA = rhohi*conv/rho_crit*1000
-    plt.errorbar(zcen, omega_DLA,xerr=[zcen-data[1:-1,0], data[1:-1,1]-zcen], yerr=data[1:-1,5], fmt="o",color="grey")
+    plt.errorbar(zcen, omega_DLA,xerr=[zcen-data[1:-1,0], data[1:-1,1]-zcen], yerr=data[1:-1,5], fmt="o",color="grey",label="PW09")
 
 def omegahi_not():
     """Omega_DLA from Noterdaeme 2012, 1210.1213"""
@@ -204,7 +204,7 @@ def omegahi_not():
     omega_dla = np.array([0.99, 0.87, 1.04, 1.1, 1.27])*0.76
     omega_err = np.array([0.05,0.04, 0.05,0.08,0.13])
     zz = [2.15,2.45,2.75,3.05,3.35]
-    plt.errorbar(zz, omega_dla,xerr=0.15, yerr=omega_err, fmt="s",color="black")
+    plt.errorbar(zz, omega_dla,xerr=0.15, yerr=omega_err, fmt="s",color="black",label="N12")
 
 def dndx_not():
     """dNdX from Noterdaeme 2012, 1210.1213"""
@@ -213,7 +213,7 @@ def dndx_not():
     #No error bars quoted in the paper for dndz (?)
     zz = [2.15,2.45,2.75,3.05,3.35]
     dzdx = np.array([3690/11625.,4509/14841.,2867/9900.,1620/5834.,789/2883.])
-    plt.errorbar(zz,dndz*dzdx,xerr=0.15,fmt="s",color="black")
+    plt.errorbar(zz,dndz*dzdx,xerr=0.15,fmt="s",color="black",label="N12")
 
 # def prochaska_10_data():
 #     """Plot the six-power-law model of Prochaska 2010. A little too complicated."""
@@ -259,4 +259,8 @@ def altay_data():
     cddf=(cddf)/(width*dX*tot_cells)
     plt.loglog(center,cddf)
 
-
+def crighton_omega():
+    """Plot omega_DLA from Crighton et al, 1506.02037 ."""
+    xerr = ((4-3.56, 4.45-4),(4.9-4.45,5.31-4.9))
+    yerr = ((1.18-0.92,1.44-1.18),(0.98-0.8,1.18-0.98))
+    plt.errorbar((4,4.9), 0.76*np.array((1.18,0.98)), xerr = xerr, yerr=yerr, fmt='^',color="darkgrey",label="C15")
