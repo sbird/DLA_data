@@ -263,4 +263,4 @@ def crighton_omega():
     """Plot omega_DLA from Crighton et al, 1506.02037 ."""
     xerr = ((4-3.56, 4.45-4),(4.9-4.45,5.31-4.9))
     yerr = ((1.18-0.92,1.44-1.18),(0.98-0.8,1.18-0.98))
-    plt.errorbar((4,4.9), 0.76*np.array((1.18,0.98)), xerr = xerr, yerr=yerr, fmt='^',color="darkgrey",label="C15")
+    plt.errorbar((4,4.9), 0.76*np.array((1.18,0.98)), xerr = xerr, yerr=yerr, fmt='^',color="brown",label="C15")
