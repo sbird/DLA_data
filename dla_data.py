@@ -264,3 +264,21 @@ def crighton_omega():
     xerr = ((4-3.56, 4.45-4),(4.9-4.45,5.31-4.9))
     yerr = ((1.18-0.92,1.44-1.18),(0.98-0.8,1.18-0.98))
     plt.errorbar((4,4.9), 0.76*np.array((1.18,0.98)), xerr = xerr, yerr=yerr, fmt='^',color="brown",label="C15")
+
+def xq100_omega():
+    """Plot omega_DLA from Berg et al, 1907.07703 ."""
+    data = np.loadtxt(path.join(datadir,"xq100_omega.txt"))
+
+    # query columns from the table. Note that the Berg data contains both
+    # subDLA and DLA data, and we will skip the subDLA data here.
+    z = data[:, 0]
+    omega_median = data[:, -3]
+    # error bars
+    omega_5 = data[:, -5]
+    omega_17 = data[:, -4]
+    omega_84 = data[:, -2]
+    omega_95 = data[:, -1]
+
+    plt.plot(z, omega_median, color="C2")
+    plt.fill_between(z, omega_5, omega_95, color="C2", alpha=0.3)
+    plt.fill_between(z, omega_17, omega_84, color="C2", alpha=0.3)
