@@ -279,6 +279,6 @@ def xq100_omega(scaling: float = 1000.0):
     omega_84 = data[:, -2] * scaling
     omega_95 = data[:, -1] * scaling
 
-    plt.plot(z, omega_median, color="C2")
+    plt.plot(z, omega_median, color="C2", label="Berg19")
     plt.fill_between(z, omega_5, omega_95, color="C2", alpha=0.3)
     plt.fill_between(z, omega_17, omega_84, color="C2", alpha=0.3)
