@@ -282,3 +282,36 @@ def xq100_omega(scaling: float = 1000.0):
     plt.plot(z, omega_median, color="C2", label="Berg19")
     plt.fill_between(z, omega_5, omega_95, color="C2", alpha=0.3)
     plt.fill_between(z, omega_17, omega_84, color="C2", alpha=0.3)
+
+def ho21_cddf(redshift = -1, moment=False, onesigma=False):
+    """Plot the CDDF from https://arxiv.org/abs/2103.10964
+    moment: if true plot Nf(N)
+    onesigma: if true plot 68% confidence. If false plot 95% confidence"""
+    if redshift < 0:
+        cfile = "ho21/cddf_all.txt"
+    elif 2 <= redshift < 2.5:
+        cfile = "ho21/cddf_z225.txt"
+    elif 2.5 <= redshift < 3:
+        cfile = "ho21/cddf_z253.txt"
+    elif 3 <= redshift < 4:
+        cfile = "ho21/cddf_z253.txt"
+    elif 4 <= redshift < 5:
+        cfile = "ho21/cddf_z45.txt"
+    else:
+        raise ValueError("No CDDF at redshift %.2g",redshift)
+    data=np.loadtxt(path.join(datadir,cfile)).T
+    NHI = 10**data[:,0]
+    cddf = data[:,1]
+    if onesigma:
+        lyer = data[:,2]
+        uyer = data[:,3]
+    else:
+        lyer = data[:,4]
+        uyer = data[:,5]
+    if moment:
+        lyer*=NHI
+        uyer*=NHI
+        cddf*=NHI
+    plt.errorbar(NHI,cddf,yerr=[cddf-lyer,uyer-cddf], fmt='o',color='black',ms=5, label="Ho21")
+    plt.yscale('log')
+    plt.xscale('log')
